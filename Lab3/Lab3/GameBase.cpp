@@ -1,4 +1,7 @@
 #include "GameBase.h"
+#include <iostream>
+
+using namespace std;
 
 GameBase::GameBase(int r, int c) {
 	row = r;
@@ -6,8 +9,8 @@ GameBase::GameBase(int r, int c) {
 }
 
 // start new game
-int Game::play() {
-	cout << *this;	// print board
+int GameBase::play() {
+	print();	// print board
 	do {	// take turns
 		if (turn() == QUIT) {	// quit detected, abort
 			cout << p1.size() + p2.size() << " turns were played. "

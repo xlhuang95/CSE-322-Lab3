@@ -16,6 +16,6 @@ public:
 	virtual void draw() = 0;
 	int prompt();
 	virtual void turn() = 0;
-	virtual void play();
+	virtual int play();
 	static GameBase * doIt(int n, char * c[]);
 };
