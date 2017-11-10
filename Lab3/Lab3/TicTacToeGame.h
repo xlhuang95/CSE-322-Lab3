@@ -8,10 +8,10 @@ class TicTacToeGame : public GameBase
 {
 public:
 	TicTacToeGame();
-	TicTacToeGame() : GameBase(0)
+	TicTacToeGame() : GameBase(0);
 	~TicTacToeGame();
 	friend ostream & operator<< (ostream &, const TicTacToeGame &);
 	virtual void print();
-	virtual void done();
+	virtual bool done();
 	virtual void draw();
 };
