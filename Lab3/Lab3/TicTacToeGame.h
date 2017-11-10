@@ -13,5 +13,6 @@ public:
 	friend ostream & operator<< (ostream &, const TicTacToeGame &);
 	virtual void print();
 	virtual bool done();
-	virtual void draw();
+	virtual bool draw();
+	virtual int turn();
 };
