@@ -1,8 +1,18 @@
-#pragma once
+
+#ifndef GAME_H
+#define GAME_H
+
 
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
+
+struct Move {
+	Move(int col, int row);
+	int col_;
+	int row_;
+};
 
 class GameBase {
 protected:
@@ -16,6 +26,7 @@ protected:
 	int currentPlayer = 1;
 public:
 	GameBase(int, int);
+	~GameBase() { cout << "destroy GameBase" << endl; };
 	virtual void print() = 0;
 	virtual bool done() = 0;
 	virtual bool draw() = 0;
@@ -25,8 +36,19 @@ public:
 	static GameBase * doIt(int n, char * c[]);
 };
 
-struct Move {
-	Move(int col, int row);
-	int col_;
-	int row_;
+
+
+class TicTacToeGame : public GameBase
+{
+public:
+	TicTacToeGame();
+	~TicTacToeGame() { cout << "destroy tictactoe" << endl; };
+	friend ostream & operator<< (ostream &, const TicTacToeGame &);
+	virtual void print();
+	virtual bool done();
+	virtual bool draw();
+	virtual int turn();
 };
+
+
+#endif // !GAME_H

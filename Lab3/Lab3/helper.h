@@ -1,4 +1,4 @@
-#pragma once
+
 // Header.h
 //
 // Author: Roy Huang xiaolin.huang@wustl.edu
@@ -10,8 +10,14 @@
 //			Declare enum state for
 //				success and failure return values of the program
 
-#ifndef HEADER_H
-#define HEADER_H
+
+#include <string>
+
+using namespace std;
+
+#ifndef HELPER_H
+#define HELPER_H
+
 
 enum index {
 	PROGRAM = 0,
@@ -26,5 +32,8 @@ enum state {
 	WRONG_NUMBER_OF_ARGUMENTS = 3,
 	WRONG_ARGUMENTS = 4
 };
+
+
+void usage(char * program_name, string s);
 
 #endif
