@@ -24,7 +24,13 @@
     <ClInclude Include="helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="gomoku.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tictactoe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gamebase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +44,13 @@
     <ClCompile Include="helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="tictactoe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gomoku.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamebase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
