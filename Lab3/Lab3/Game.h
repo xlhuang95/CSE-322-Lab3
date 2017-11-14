@@ -19,6 +19,7 @@ protected:
 	int row, col, numTurns, numTurnsRemain;
 	vector<vector<string> > pieces;
 	int longestString;
+	int win_count;
 	vector<Move> player1;
 	vector<Move> player2;
 	string s_player1;
@@ -50,5 +51,14 @@ public:
 	virtual int turn();
 };
 
-
+class GomokuGame : public GameBase
+{
+	friend ostream & operator<<(ostream& out, GomokuGame);
+public:
+	GomokuGame();
+	virtual void print();
+	virtual bool done();
+	virtual bool draw();
+	virtual int turn();
+};
 #endif // !GAME_H
