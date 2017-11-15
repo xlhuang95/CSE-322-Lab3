@@ -9,10 +9,10 @@ Gomoku::Gomoku(){
 	row = 19;
 	col = 19;
 	streak = 5;
-	for (int i = 0; i < row; ++i) {
+	for (unsigned int i = 0; i < row+1; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
-		for (int j = 0; j < col; ++j) {
+		for (unsigned int j = 0; j < col+1; ++j) {
 			pieces[i].push_back("");
 		}
 	}
@@ -26,16 +26,16 @@ void Gomoku::print() {
 
 ostream & operator<<(ostream& out, Gomoku g) {
 	cout << "print" << endl;
-	for (int row = g.row - 1; row >= 0; --row) {	// print rows in opposite
-		out << left << setw(g.longestString + 1) << row + 1;
-		for (int col = 0; col < g.col; col++) {
+	for (unsigned int row = g.row; row >0; --row) {	// print rows in opposite
+		out << left << setw(g.longestString + 1) << row ;
+		for (unsigned int col = 1; col < g.col+1; col++) {
 			out << left << setw(g.longestString + 1) << g.pieces[col][row];
 		}
 		out << endl;
 	}
 	out << left << setw(g.longestString + 1) << "X";
-	for (int i = 0; i < g.col; i++) {
-		out << left << setw(g.longestString + 1) << i + 1;
+	for (unsigned int i = 1; i < g.col+1; i++) {
+		out << left << setw(g.longestString + 1) << i;
 	}
 	out << endl;
 	return out;
@@ -101,8 +101,8 @@ bool Gomoku::done() {
 bool Gomoku::draw()
 {
 	bool winable = false;
-	for (int i = 1; i <= col; ++i) {
-		for (int j = 1; j <= row; ++j) {
+	for (unsigned int i = 1; i <= col; ++i) {
+		for (unsigned int j = 1; j <= row; ++j) {
 			if (pieces[i][j] == "") {
 				pieces[i][j] = "B";
 				if (done()) {

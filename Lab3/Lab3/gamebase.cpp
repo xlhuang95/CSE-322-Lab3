@@ -29,9 +29,9 @@ int GameBase::prompt(unsigned int &col, unsigned int &row) {
 		}
 		replace(line.begin(), line.end(), ',', ' ');	// replace every ',' with ' '
 		istringstream iss(line);
-		int tCol, tRow;
+		unsigned int tCol, tRow;
 		if (iss >> tCol >> tRow) {	// if successfully extracted a col and a row number
-			if (tCol >= 1 && tCol <= 3 && tRow >= 1 && tRow <= 3) {	// if the coordinate is within range
+			if (tCol >= 1 && tCol <= col && tRow >= 1 && tRow <= row) {	// if the coordinate is within range
 				if (pieces[tCol][tRow] == "") {	// if the position is not occupied yet
 					col = tCol;
 					row = tRow;

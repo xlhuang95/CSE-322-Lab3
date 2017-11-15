@@ -25,7 +25,6 @@ protected:
 	unsigned int row, col, numTurns, streak;
 	vector<vector<string> > pieces;
 	int longestString;
-	int win_count;
 	vector<Move> player1;
 	vector<Move> player2;
 	string symbol1;
