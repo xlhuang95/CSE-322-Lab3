@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "gomoku.h"
-#include <iomanip>
 #include "helper.h"
+#include <iomanip>
 
 // default constructor with dimension of 19 and winning streak of 5
 Gomoku::Gomoku(){

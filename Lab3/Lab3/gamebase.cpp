@@ -29,6 +29,7 @@ int GameBase::prompt(unsigned int &col, unsigned int &row) {
 		cout << "Please enter a valid move in column,row or enter quit to end game." << endl;
 		string line;
 		getline(cin, line);
+
 		if (line == "quit") {	// quit detected, abort
 			return QUIT;
 		}
@@ -50,40 +51,48 @@ int GameBase::prompt(unsigned int &col, unsigned int &row) {
 // play method
 int GameBase::play() {
 	print();	// print board
-	longestString = (int)max(symbol1.length(), symbol2.length());
-	do {	// take turns
-		if (turn() == QUIT) {	// quit detected, abort
+	longestString = max(symbol1.length(), symbol2.length());
+
+	// take turns
+	do {
+		// quit detected, abort
+		if (turn() == QUIT) {	
 			cout << player1.size() + player2.size() << " turns were played. "
 				<< "Player quit.";
 			return QUIT;
 		}
 	} while (!(done() || draw()));	// as long as not draw or done
 
-	if (done()) {	// done detected
-		if (currentPlayer == 1) {	// O wins
+	// done detected
+	if (done()) {
+		// O wins
+		if (currentPlayer == 1) {	
 			cout << "Player "<< symbol2 << " wins.";
 		}
-		else {					// X wins
+		// X wins
+		else {					
 			cout << "Player " << symbol1 << " wins.";
 		}
 		return SUCCESS;
 	}
-
-	else {	// draw detected
+	// draw detected
+	else {	
 		cout << player1.size() + player2.size() << " turns were played. "
 			<< "No winning moves remain.";
 		return DRAW;
 	}
 }
 
-// checkInput method
+// check user input and create game according to user input
 GameBase * GameBase::checkInput(int n, char * c[]) {
 	string gameName = c[INPUT_FILE];
-	if (gameName.compare("TicTacToe") == 0)
+	// if user input is TicTacToe, return a new TicTacToe game object
+	if (gameName == "TicTacToe")
 	{
 		return new TicTacToe;
 	}
-	else if (gameName.compare("Gomoku") == 0)
+	// if user input is Gomoku, return a new Gomoku game object
+	else if (gameName == "Gomoku")
 	{
 		// user enter no additional argumenmt, enter default mode
 		if (n == NUMBER_OF_ARGUMENTS)
@@ -110,10 +119,10 @@ GameBase * GameBase::checkInput(int n, char * c[]) {
 		// user enter two additional argument, specify the game dimensions and winning streak
 		else if (n == NUMBER_OF_ARGUMENTS_GOMOKU_BOARD_STREAK)
 		{
-			string s = c[DIMENSION];
-			string s0 = c[STREAK];
-			istringstream iss(s);
-			istringstream iss0(s0);
+			string d = c[DIMENSION];
+			string s = c[STREAK];
+			istringstream iss(d);
+			istringstream iss0(s);
 			int dim;
 			int streak;
 			iss >> dim;

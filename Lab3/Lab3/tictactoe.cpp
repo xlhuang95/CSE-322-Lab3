@@ -10,6 +10,7 @@ TicTacToe::TicTacToe() {
 	row = 3;
 	col = 3;
 	streak = 3;
+	// init game board
 	for (unsigned int i = 0; i < row + 2; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
@@ -45,64 +46,63 @@ void TicTacToe::print() {
 // override done
 bool TicTacToe::done() {
 	// test row
-	for (unsigned int j = 1; j <= row; ++j) {
-		for (unsigned int i = 1; i <= col - streak + 1; ++i) {
+	for (size_t j = 1; j <= row; ++j) {
+		for (size_t i = 1; i <= col - streak + 1; ++i) {
 			bool win = true;
-			for (unsigned int k = i + 1; k <= i + streak - 1; ++k) {
+			for (size_t k = i + 1; k <= i + streak - 1; ++k) {
 				if ((pieces[k][j] != pieces[k - 1][j]) || pieces[k][j] == empty) {
 					win = false;
 				}
 			}
-			if (win == true) {
+			if (win) {
 				return true;
 			}
 		}
 	}
 
 	// test col
-	for (unsigned int i = 1; i <= col; ++i) {
-		for (unsigned int j = 1; j <= row - streak + 1; ++j) {
+	for (size_t i = 1; i <= col; ++i) {
+		for (size_t j = 1; j <= row - streak + 1; ++j) {
 			bool win = true;
-			for (unsigned int k = j + 1; k <= j + streak - 1; ++k) {
+			for (size_t k = j + 1; k <= j + streak - 1; ++k) {
 				if ((pieces[i][k] != pieces[i][k - 1]) || pieces[i][k] == empty) {
 					win = false;
 				}
 			}
-			if (win == true) {
+			if (win) {
 				return true;
 			}
 		}
 	}
 
 	// test diagonal
-	for (unsigned int i = 1; i <= col - streak + 1; ++i) {
-		for (unsigned int j = row; j >= streak; --j) {
+	for (size_t i = 1; i <= col - streak + 1; ++i) {
+		for (size_t j = row; j >= streak; --j) {
 			bool win = true;
-			for (unsigned int k = 0; k <= streak - 2; ++k) {
+			for (size_t k = 0; k <= streak - 2; ++k) {
 				if ((pieces[i + k][j - k] != pieces[i + k + 1][j - k - 1]) || pieces[i + k][j - k] == empty) {
 					win = false;
 				}
 			}
-			if (win == true) {
+			if (win) {
 				return true;
 			}
 		}
 	}
 
-	for (unsigned int i = streak; i >= streak; --i) {
-		for (unsigned int j = row; j >= streak; --j) {
+	for (size_t i = streak; i >= streak; --i) {
+		for (size_t j = row; j >= streak; --j) {
 			bool win = true;
-			for (unsigned int k = 0; k <= streak - 2; ++k) {
+			for (size_t k = 0; k <= streak - 2; ++k) {
 				if ((pieces[i - k][j - k] != pieces[i - k - 1][j - k - 1]) || pieces[i - k][j - k] == empty) {
 					win = false;
 				}
 			}
-			if (win == true) {
+			if (win) {
 				return true;
 			}
 		}
 	}
-
 	return false;
 }
 
@@ -110,8 +110,8 @@ bool TicTacToe::done() {
 bool TicTacToe::draw() {
 	TicTacToe temp1 = *this;
 	TicTacToe temp2 = *this;
-	for (unsigned int i = 1; i <= col; ++i) {
-		for (unsigned int j = 1; j <= row; ++j) {
+	for (size_t i = 1; i <= col; ++i) {
+		for (size_t j = 1; j <= row; ++j) {
 			if (temp1.pieces[i][j] == empty) {
 				temp1.pieces[i][j] = symbol1;
 			}
