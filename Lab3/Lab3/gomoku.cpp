@@ -3,6 +3,7 @@
 #include <iomanip>
 #include "helper.h"
 
+// default constructor with dimension of 19 and winning streak of 5
 Gomoku::Gomoku(){
 	symbol1 = "B";
 	symbol2 = "W";
@@ -13,17 +14,38 @@ Gomoku::Gomoku(){
 		vector<string> temp;
 		pieces.push_back(temp);
 		for (unsigned int j = 0; j < col+1; ++j) {
-			pieces[i].push_back("");
+			pieces[i].push_back(empty);
 		}
 	}
-	cout << "gomoku generator" << endl;
 }
 
+/**
+*  Gomoku constructor.
+*   
+*  @ d is the dimension of the game board
+*  @ s is winning streak 
+*/
+Gomoku::Gomoku(int d, int s) {
+	symbol1 = "B";
+	symbol2 = "W";
+	row = d;
+	col = d;
+	streak = s;
+	for (unsigned int i = 0; i < row + 1; ++i) {
+		vector<string> temp;
+		pieces.push_back(temp);
+		for (unsigned int j = 0; j < col + 1; ++j) {
+			pieces[i].push_back(empty);
+		}
+	}
+}
 
+// print out the game board
 void Gomoku::print() {
 	cout << *this;
 }
 
+// overload insertion operator
 ostream & operator<<(ostream& out, Gomoku g) {
 	cout << "print" << endl;
 	for (unsigned int row = g.row; row >0; --row) {	// print rows in opposite
@@ -41,90 +63,94 @@ ostream & operator<<(ostream& out, Gomoku g) {
 	return out;
 }
 
+// check if the game is finished with a winner
 bool Gomoku::done() {
-	size_t max_test = row - streak;
-	for (size_t i = 0; i < max_test; i++)
-	{
-		for (size_t j = 0; j < max_test; j++)
-		{
-			int rowCt = 0;
-			int colCt = 0;
-			int lDCt = 0;
-			int rDCt = 0;
-			for (size_t k = 0; k < streak; k++)
-			{
-				// check row
-				if (pieces[i][j + k] == pieces[i][j])
-				{
-					rowCt++;
-					if (rowCt == streak)
-					{
-						return true;
-					}
+	// test row
+	for (unsigned int j = 1; j <= row; ++j) {
+		for (unsigned int i = 1; i <= col - streak + 1; ++i) {
+			bool win = true;
+			for (unsigned int k = i + 1; k <= i + streak - 1; ++k) {
+				if ((pieces[k][j] != pieces[k - 1][j]) || pieces[k][j] == empty) {
+					win = false;
 				}
+			}
+			if (win) {
+				return true;
+			}
+		}
+	}
 
-				// check col
-				if (pieces[i + k][j] == pieces[i][j])
-				{
-					colCt++;
-					if (colCt == streak)
-					{
-						return true;
-					}
+	// test col
+	for (unsigned int i = 1; i <= col; ++i) {
+		for (unsigned int j = 1; j <= row - streak + 1; ++j) {
+			bool win = true;
+			for (unsigned int k = j + 1; k <= j + streak - 1; ++k) {
+				if ((pieces[i][k] != pieces[i][k - 1]) || pieces[i][k] == empty) {
+					win = false;
 				}
+			}
+			if (win) {
+				return true;
+			}
+		}
+	}
 
-				// check diagonal from the left  
-				if (pieces[i + k][j + k] == pieces[i][j])
-				{
-					lDCt++;
-					if (lDCt == streak)
-					{
-						return true;
-					}
+	// test diagonal
+	for (unsigned int i = 1; i <= col - streak + 1; ++i) {
+		for (unsigned int j = row; j >= streak; --j) {
+			bool win = true;
+			for (unsigned int k = 0; k <= streak - 2; ++k) {
+				if ((pieces[i + k][j - k] != pieces[i + k + 1][j - k - 1]) || pieces[i + k][j - k] == empty) {
+					win = false;
 				}
+			}
+			if (win) {
+				return true;
+			}
+		}
+	}
 
-				// check diagonal from the right
-				if (pieces[row - i - 1 - k][row - j - 1 - k] == pieces[row - i - 1][row - j - 1])
-				{
-					rDCt++;
-					if (rDCt == row)
-					{
-						return true;
-					}
+	for (unsigned int i = col; i >= streak; --i) {
+		for (unsigned int j = row; j >= streak; --j) {
+			bool win = true;
+			for (unsigned int k = 0; k <= streak - 2; ++k) {
+				if ((pieces[i - k][j - k] != pieces[i - k - 1][j - k - 1]) || pieces[i - k][j - k] == empty) {
+					win = false;
 				}
+			}
+			if (win) {
+				return true;
 			}
 		}
 	}
 	return false;
 }
 
+// check if the game is a draw
 bool Gomoku::draw()
 {
-	bool winable = false;
+	Gomoku temp1 = *this;
+	Gomoku temp2 = *this;
 	for (unsigned int i = 1; i <= col; ++i) {
 		for (unsigned int j = 1; j <= row; ++j) {
-			if (pieces[i][j] == "") {
-				pieces[i][j] = "B";
-				if (done()) {
-					winable = true;
-				}
-				pieces[i][j] = "W";
-				if (done()) {
-					winable = true;
-				}
-				pieces[i][j] = "";
-			}	// is empty as long as one position is empty
+			if (temp1.pieces[i][j] == empty) {
+				temp1.pieces[i][j] = symbol1;
+			}
+			if (temp2.pieces[i][j] == empty) {
+				temp2.pieces[i][j] = symbol2;
+			}
 		}
 	}
-	return !(winable || done());
+	return !(temp1.done() || temp2.done());
 }
 
+// override turn method
 int Gomoku::turn() {
 	if (currentPlayer == 1) {	// Player 1's turn
-		cout << "Now it's player X's turn" << endl;
+		cout << "Now it's player B's turn" << endl;
 	}
 	else {				  	// O's turn
-		cout << "Now it's player O's turn" << endl;
+		cout << "Now it's player W's turn" << endl;
 	}
 
 	unsigned int col, row;

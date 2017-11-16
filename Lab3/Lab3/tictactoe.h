@@ -9,8 +9,8 @@ public:
 	TicTacToe();
 	friend ostream & operator<< (ostream &, const TicTacToe &);
 	virtual void print() override;
-	virtual bool done() override;
 	virtual bool draw() override;
+	virtual bool done() override;
 	virtual int turn() override;
 };
 

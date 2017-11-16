@@ -6,6 +6,7 @@
 class Gomoku : public GameBase {
 public:
 	Gomoku();
+	Gomoku(int, int);
 	friend ostream & operator<<(ostream& out, Gomoku);
 	virtual void print() override;
 	virtual bool done() override;

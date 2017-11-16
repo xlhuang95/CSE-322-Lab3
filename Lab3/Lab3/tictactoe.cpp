@@ -7,30 +7,29 @@
 TicTacToe::TicTacToe() {
 	symbol1 = "X";
 	symbol2 = "O";
-	row = 5;
-	col = 5;
+	row = 3;
+	col = 3;
 	streak = 3;
-	for (int i = 0; i < row + 2; ++i) {
+	for (unsigned int i = 0; i < row + 2; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
-		for (int j = 0; j < col + 2; ++j) {
-			pieces[i].push_back("");
+		for (unsigned int j = 0; j < col + 2; ++j) {
+			pieces[i].push_back(empty);
 		}
 	}
 }
 
 // overload insertion operator
 ostream & operator << (ostream &out, const TicTacToe &g) {
-	cout << "print" << endl;
 	for (int row = g.row + 1; row >= 0; --row) {	// print rows in opposite
 		out << left << setw(g.longestString + 1) << row;
-		for (int col = 0; col <= g.col + 1; col++) {
+		for (unsigned int col = 0; col <= g.col + 1; col++) {
 			out << left << setw(g.longestString + 1) << g.pieces[col][row];
 		}
 		out << endl;
 	}
 	out << setw(g.longestString + 1) << " ";
-	for (int i = 0; i <= g.col + 1; i++) {
+	for (unsigned int i = 0; i <= g.col + 1; i++) {
 		out << left << setw(g.longestString + 1) << i;
 	}
 	out << endl;
@@ -45,72 +44,83 @@ void TicTacToe::print() {
 
 // override done
 bool TicTacToe::done() {
-	size_t max_test = row - streak;
-	for (size_t i = 0; i < max_test; i++)
-	{
-		for (size_t j = 0; j < max_test; j++)
-		{
-			int rowCt = 0;
-			int colCt = 0;
-			int lDCt = 0;
-			int rDCt = 0;
-			for (size_t k = 0; k < streak; k++)
-			{
-				// check row
-				if (pieces[i][j + k] == pieces[i][j])
-				{
-					rowCt++;
-					if (rowCt == streak)
-					{
-						return true;
-					}
+	// test row
+	for (unsigned int j = 1; j <= row; ++j) {
+		for (unsigned int i = 1; i <= col - streak + 1; ++i) {
+			bool win = true;
+			for (unsigned int k = i + 1; k <= i + streak - 1; ++k) {
+				if ((pieces[k][j] != pieces[k - 1][j]) || pieces[k][j] == empty) {
+					win = false;
 				}
-
-				// check col
-				if (pieces[i + k][j] == pieces[i][j])
-				{
-					colCt++;
-					if (colCt == streak)
-					{
-						return true;
-					}
-				}
-
-				// check diagonal from the left  
-				if (pieces[i + k][j + k] == pieces[i][j])
-				{
-					lDCt++;
-					if (lDCt == streak)
-					{
-						return true;
-					}
-				}
-
-				// check diagonal from the right
-				if (pieces[row - i - 1 - k][row - j - 1 - k] == pieces[row - i - 1][row - j - 1])
-				{
-					rDCt++;
-					if (rDCt == row)
-					{
-						return true;
-					}
-				}
+			}
+			if (win == true) {
+				return true;
 			}
 		}
 	}
+
+	// test col
+	for (unsigned int i = 1; i <= col; ++i) {
+		for (unsigned int j = 1; j <= row - streak + 1; ++j) {
+			bool win = true;
+			for (unsigned int k = j + 1; k <= j + streak - 1; ++k) {
+				if ((pieces[i][k] != pieces[i][k - 1]) || pieces[i][k] == empty) {
+					win = false;
+				}
+			}
+			if (win == true) {
+				return true;
+			}
+		}
+	}
+
+	// test diagonal
+	for (unsigned int i = 1; i <= col - streak + 1; ++i) {
+		for (unsigned int j = row; j >= streak; --j) {
+			bool win = true;
+			for (unsigned int k = 0; k <= streak - 2; ++k) {
+				if ((pieces[i + k][j - k] != pieces[i + k + 1][j - k - 1]) || pieces[i + k][j - k] == empty) {
+					win = false;
+				}
+			}
+			if (win == true) {
+				return true;
+			}
+		}
+	}
+
+	for (unsigned int i = streak; i >= streak; --i) {
+		for (unsigned int j = row; j >= streak; --j) {
+			bool win = true;
+			for (unsigned int k = 0; k <= streak - 2; ++k) {
+				if ((pieces[i - k][j - k] != pieces[i - k - 1][j - k - 1]) || pieces[i - k][j - k] == empty) {
+					win = false;
+				}
+			}
+			if (win == true) {
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 
 // override draw
 bool TicTacToe::draw() {
-	bool empty = false;
-	for (int i = 1; i <= col; ++i) {
-		for (int j = 1; j <= row; ++j) {
-			if (pieces[i][j] == "")
-				empty = true;	// is empty as long as one position is empty
+	TicTacToe temp1 = *this;
+	TicTacToe temp2 = *this;
+	for (unsigned int i = 1; i <= col; ++i) {
+		for (unsigned int j = 1; j <= row; ++j) {
+			if (temp1.pieces[i][j] == empty) {
+				temp1.pieces[i][j] = symbol1;
+			}
+			if (temp2.pieces[i][j] == empty) {
+				temp2.pieces[i][j] = symbol2;
+			}
 		}
 	}
-	return !(empty || done());	// if the game if not empty or done
+	return !(temp1.done() || temp2.done());
 }
 
 
