@@ -31,20 +31,20 @@ public:
 	virtual void print() = 0;
 	virtual bool done() = 0;
 	virtual bool draw() = 0;
-	int prompt(unsigned int&, unsigned int&);
 	virtual int turn() = 0;
 	int play();
+	int prompt(unsigned int&, unsigned int&);
 	static GameBase * checkInput(int, char*[]);
 protected:
 	unsigned int row, col, numTurns, streak;
-	vector<vector<string> > pieces;
 	int longestString;
-	vector<Move> player1;
-	vector<Move> player2;
+	int currentPlayer = 1;
 	string symbol1;
 	string symbol2;
 	string empty = "";
-	int currentPlayer = 1;
+	vector<Move> player1;
+	vector<Move> player2;
+	vector<vector<string> > pieces;
 };
 
 #endif
