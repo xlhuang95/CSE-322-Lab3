@@ -1,9 +1,14 @@
 /*
 helper.cpp
 
-Author: Roy Huang xiaolin.huang@wustl.edu; Jerry Kong jerry.kong@wustl.edu; Fangchen Li fangchen.li@wustl.edu
-
 Purpose: Definition of usage class
+
+Author:
+Roy Huang   xiaolin.huang@wustl.edu;
+Jerry Kong  jerry.kong@wustl.edu;
+Fangchen Li fangchen.li@wustl.edu
+
+Date: 11/16/2017
 */
 
 #include "stdafx.h"
