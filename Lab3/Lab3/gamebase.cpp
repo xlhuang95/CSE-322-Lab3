@@ -1,7 +1,10 @@
 /*
 gamebase.cpp
 
-Author: Roy Huang xiaolin.huang@wustl.edu; Jerry Kong jerry.kong@wustl.edu; Fangchen Li fangchen.li@wustl.edu
+Author: 
+Roy Huang   xiaolin.huang@wustl.edu; 
+Jerry Kong  jerry.kong@wustl.edu;
+Fangchen Li fangchen.li@wustl.edu
 
 Purpose: Definition of base class GameBase
 */
@@ -106,14 +109,11 @@ GameBase * GameBase::checkInput(int n, char * c[]) {
 			istringstream iss(s);
 			int dim;
 			iss >> dim;
-			if (dim >= 5) {
-				return new Gomoku(dim, 5);
-			}
-			else if (dim >= 3) {
-				return new Gomoku(dim, 3);
-			}
-			else if (dim >= 1) {
+			if (dim < 5) {
 				return new Gomoku(dim, dim);
+			}
+			else {
+				return new Gomoku(dim, 5);
 			}
 		}
 		// user enter two additional argument, specify the game dimensions and winning streak
@@ -132,6 +132,7 @@ GameBase * GameBase::checkInput(int n, char * c[]) {
 			}
 		}
 	}
+	usage(c[INPUT_FILE]);
 	return 0;
 }
 

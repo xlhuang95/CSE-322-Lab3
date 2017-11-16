@@ -15,8 +15,10 @@ using namespace std;
 
 // print out usage message
 void usage(char * program_name) {
-	cout << "Usage: " << program_name << " TicTacToe" << endl 
-		 << "or " << program_name << " Gomoku (Dimension) (Streak)" << endl
-		 << "This program starts a boardgame."
-		 << endl;
+	cout << "Usage: " << endl
+		<< program_name << " TicTacToe" << endl
+		<< "or " << endl
+		<< program_name << " Gomoku [Dimension] [Streak]" << endl
+		<< "Dimension > 0, Streak > 0, and Dimention >= Streal" << endl
+		<< "This program starts a boardgame." << endl;
 }
