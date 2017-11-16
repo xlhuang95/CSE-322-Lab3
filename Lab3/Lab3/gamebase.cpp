@@ -7,12 +7,12 @@ Purpose: Definition of base class GameBase
 */
 
 #include "stdafx.h"
-#include <sstream>
-#include <algorithm>
 #include "helper.h"
 #include "gamebase.h"
 #include "tictactoe.h"
 #include "gomoku.h"
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
 

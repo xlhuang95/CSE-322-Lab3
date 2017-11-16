@@ -10,10 +10,11 @@ Gomoku::Gomoku(){
 	row = 19;
 	col = 19;
 	streak = 5;
-	for (unsigned int i = 0; i < row+1; ++i) {
+	longestString = 1;
+	for (size_t i = 0; i < row+1; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
-		for (unsigned int j = 0; j < col+1; ++j) {
+		for (size_t j = 0; j < col+1; ++j) {
 			pieces[i].push_back(empty);
 		}
 	}
@@ -31,10 +32,11 @@ Gomoku::Gomoku(int d, int s) {
 	row = d;
 	col = d;
 	streak = s;
-	for (unsigned int i = 0; i < row + 1; ++i) {
+	longestString = 1;
+	for (size_t i = 0; i < row + 1; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
-		for (unsigned int j = 0; j < col + 1; ++j) {
+		for (size_t j = 0; j < col + 1; ++j) {
 			pieces[i].push_back(empty);
 		}
 	}
@@ -48,16 +50,27 @@ void Gomoku::print() {
 // overload insertion operator
 ostream & operator<<(ostream& out, Gomoku g) {
 	cout << "print" << endl;
-	for (unsigned int row = g.row; row >0; --row) {	// print rows in opposite
+	for (size_t row = g.row; row >0; --row) {	// print rows in opposite
 		out << left << setw(g.longestString + 1) << row ;
-		for (unsigned int col = 1; col < g.col+1; col++) {
-			out << left << setw(g.longestString + 1) << g.pieces[col][row];
+		for (size_t col = 1; col < g.col+1; col++) {
+			if (col > 9) {
+				out << left << setw(g.longestString + 2) << g.pieces[col][row];
+			}
+			else {
+				out << left << setw(g.longestString + 1) << g.pieces[col][row];
+			}
 		}
 		out << endl;
 	}
 	out << left << setw(g.longestString + 1) << "X";
-	for (unsigned int i = 1; i < g.col+1; i++) {
-		out << left << setw(g.longestString + 1) << i;
+	for (size_t i = 1; i < g.col+1; i++) {
+		if (i > 9) {
+			out << left << setw(g.longestString + 2) << i;
+		}
+		else
+		{
+			out << left << setw(g.longestString + 1) << i;
+		}
 	}
 	out << endl;
 	return out;
@@ -66,10 +79,10 @@ ostream & operator<<(ostream& out, Gomoku g) {
 // check if the game is finished with a winner
 bool Gomoku::done() {
 	// test row
-	for (unsigned int j = 1; j <= row; ++j) {
-		for (unsigned int i = 1; i <= col - streak + 1; ++i) {
+	for (size_t j = 1; j <= row; ++j) {
+		for (size_t i = 1; i <= col - streak + 1; ++i) {
 			bool win = true;
-			for (unsigned int k = i + 1; k <= i + streak - 1; ++k) {
+			for (size_t k = i + 1; k <= i + streak - 1; ++k) {
 				if ((pieces[k][j] != pieces[k - 1][j]) || pieces[k][j] == empty) {
 					win = false;
 				}
@@ -81,10 +94,10 @@ bool Gomoku::done() {
 	}
 
 	// test col
-	for (unsigned int i = 1; i <= col; ++i) {
-		for (unsigned int j = 1; j <= row - streak + 1; ++j) {
+	for (size_t i = 1; i <= col; ++i) {
+		for (size_t j = 1; j <= row - streak + 1; ++j) {
 			bool win = true;
-			for (unsigned int k = j + 1; k <= j + streak - 1; ++k) {
+			for (size_t k = j + 1; k <= j + streak - 1; ++k) {
 				if ((pieces[i][k] != pieces[i][k - 1]) || pieces[i][k] == empty) {
 					win = false;
 				}
@@ -96,10 +109,10 @@ bool Gomoku::done() {
 	}
 
 	// test diagonal
-	for (unsigned int i = 1; i <= col - streak + 1; ++i) {
-		for (unsigned int j = row; j >= streak; --j) {
+	for (size_t i = 1; i <= col - streak + 1; ++i) {
+		for (size_t j = row; j >= streak; --j) {
 			bool win = true;
-			for (unsigned int k = 0; k <= streak - 2; ++k) {
+			for (size_t k = 0; k <= streak - 2; ++k) {
 				if ((pieces[i + k][j - k] != pieces[i + k + 1][j - k - 1]) || pieces[i + k][j - k] == empty) {
 					win = false;
 				}
@@ -110,10 +123,10 @@ bool Gomoku::done() {
 		}
 	}
 
-	for (unsigned int i = col; i >= streak; --i) {
-		for (unsigned int j = row; j >= streak; --j) {
+	for (size_t i = col; i >= streak; --i) {
+		for (size_t j = row; j >= streak; --j) {
 			bool win = true;
-			for (unsigned int k = 0; k <= streak - 2; ++k) {
+			for (size_t k = 0; k <= streak - 2; ++k) {
 				if ((pieces[i - k][j - k] != pieces[i - k - 1][j - k - 1]) || pieces[i - k][j - k] == empty) {
 					win = false;
 				}
@@ -131,8 +144,8 @@ bool Gomoku::draw()
 {
 	Gomoku temp1 = *this;
 	Gomoku temp2 = *this;
-	for (unsigned int i = 1; i <= col; ++i) {
-		for (unsigned int j = 1; j <= row; ++j) {
+	for (size_t i = 1; i <= col; ++i) {
+		for (size_t j = 1; j <= row; ++j) {
 			if (temp1.pieces[i][j] == empty) {
 				temp1.pieces[i][j] = symbol1;
 			}
