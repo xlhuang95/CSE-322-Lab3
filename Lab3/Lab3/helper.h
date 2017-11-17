@@ -1,8 +1,8 @@
 /*
 helper.h
 
-Purpose: Declaration of enumeration for command argument indeces and return values
-Definition of usage function
+Purpose: Declaration of enumeration for command argument indices and return values
+         Declaration of usage function
 
 Author:
 Roy Huang   xiaolin.huang@wustl.edu;
@@ -19,21 +19,26 @@ Date: 11/16/2017
 
 enum index {
 	PROGRAM = 0,
-	INPUT_FILE = 1,
+	GAMENAME = 1,
+	DIMENSION = 2,
+	STREAK = 3
+};
+
+enum argument {
 	NUMBER_OF_ARGUMENTS = 2,
 	NUMBER_OF_ARGUMENTS_GOMOKU_BOARD = 3,
 	NUMBER_OF_ARGUMENTS_GOMOKU_BOARD_STREAK = 4,
-	DIMENSION = 2,
-	STREAK = 3
+	MIN_NUMBER_OF_ARGUMENTS = 2,
+	MAX_NUMBER_OF_ARGUMENTS = 4
 };
 
 enum state {
 	SUCCESS = 0,
 	DRAW = 1,
 	QUIT = 2,
-	WRONG_NUMBER_OF_ARGUMENTS = 3,
-	WRONG_ARGUMENTS = 4,
-	BAD_ALLOCATION = 5
+	WRONG_ARGUMENTS = 3,
+	BAD_ALLOCATION = 4,
+	WRONG_DIMENSION = 5
 };
 
 // print out usage message

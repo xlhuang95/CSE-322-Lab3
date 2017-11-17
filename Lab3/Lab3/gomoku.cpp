@@ -15,6 +15,7 @@ Date: 11/16/2017
 #include "gomoku.h"
 #include "helper.h"
 #include <iomanip>
+#include <algorithm>
 
 // default constructor with dimension of 19 and winning streak of 5
 Gomoku::Gomoku(){
@@ -23,7 +24,7 @@ Gomoku::Gomoku(){
 	row = 19;
 	col = 19;
 	streak = 5;
-	longestString = 1;
+	longestString = max(symbol1.length(), symbol2.length());
 	for (size_t i = 0; i < row+1; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
@@ -45,7 +46,7 @@ Gomoku::Gomoku(int d, int s) {
 	row = d;
 	col = d;
 	streak = s;
-	longestString = 1;
+	longestString = max(symbol1.length(), symbol2.length());
 	for (size_t i = 0; i < row + 1; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
@@ -62,7 +63,6 @@ void Gomoku::print() {
 
 // overload insertion operator
 ostream & operator<<(ostream& out, Gomoku g) {
-	cout << "print" << endl;
 	for (size_t row = g.row; row >0; --row) {	// print rows in opposite
 		out << left << setw(g.longestString + 1) << row ;
 		for (size_t col = 1; col < g.col+1; col++) {
@@ -80,8 +80,7 @@ ostream & operator<<(ostream& out, Gomoku g) {
 		if (i > 9) {
 			out << left << setw(g.longestString + 2) << i;
 		}
-		else
-		{
+		else {
 			out << left << setw(g.longestString + 1) << i;
 		}
 	}

@@ -28,7 +28,7 @@ Move::Move(int c, int r) {
 	row = r;
 };
 
-// prompt method
+// prompt method, ask user to enter next move
 int GameBase::prompt(unsigned int &col, unsigned int &row) {
 	while (true) {
 		cout << "Please enter a valid move in column,row or enter quit to end game." << endl;
@@ -36,7 +36,7 @@ int GameBase::prompt(unsigned int &col, unsigned int &row) {
 		getline(cin, line);
 
 		if (line == "quit") {	// quit detected, abort
-			return QUIT;
+			throw invalid_argument("User entered quit");
 		}
 		replace(line.begin(), line.end(), ',', ' ');	// replace every ',' with ' '
 		istringstream iss(line);
@@ -53,7 +53,7 @@ int GameBase::prompt(unsigned int &col, unsigned int &row) {
 	}
 }
 
-// play method
+// play method, start the game
 int GameBase::play() {
 	print();	// print board
 	longestString = max(symbol1.length(), symbol2.length());
@@ -90,15 +90,16 @@ int GameBase::play() {
 
 // check user input and create game according to user input
 GameBase * GameBase::checkInput(int n, char * c[]) {
-	string gameName = c[INPUT_FILE];
+	string gameName;
+	if (n >= MIN_NUMBER_OF_ARGUMENTS) {
+		gameName = c[GAMENAME];
+	}
 	// if user input is TicTacToe, return a new TicTacToe game object
-	if (gameName == "TicTacToe")
-	{
+	if (gameName == "TicTacToe" && n == NUMBER_OF_ARGUMENTS) {
 		return new TicTacToe;
 	}
 	// if user input is Gomoku, return a new Gomoku game object
-	else if (gameName == "Gomoku")
-	{
+	else if (gameName == "Gomoku") {
 		// user enter no additional argumenmt, enter default mode
 		if (n == NUMBER_OF_ARGUMENTS)
 		{
@@ -110,12 +111,13 @@ GameBase * GameBase::checkInput(int n, char * c[]) {
 			string s = c[DIMENSION];
 			istringstream iss(s);
 			int dim;
-			iss >> dim;
-			if (dim < 5) {
-				return new Gomoku(dim, dim);
-			}
-			else {
-				return new Gomoku(dim, 5);
+			if (iss >> dim) {
+				if (dim < 5) {
+					return new Gomoku(dim, dim);
+				}
+				else {
+					return new Gomoku(dim, 5);
+				}
 			}
 		}
 		// user enter two additional argument, specify the game dimensions and winning streak
@@ -127,14 +129,13 @@ GameBase * GameBase::checkInput(int n, char * c[]) {
 			istringstream iss0(s);
 			int dim;
 			int streak;
-			iss >> dim;
-			iss0 >> streak;
-			if (dim >= streak) {
-				return new Gomoku(dim, streak);
+			if (iss >> dim && iss0 >> streak) {
+				if (dim >= streak) {
+					return new Gomoku(dim, streak);
+				}
 			}
 		}
 	}
-	usage(c[INPUT_FILE]);
 	return 0;
 }
 

@@ -24,6 +24,6 @@ void usage(char * program_name) {
 		<< program_name << " TicTacToe" << endl
 		<< "or " << endl
 		<< program_name << " Gomoku [Dimension] [Streak]" << endl
-		<< "Dimension > 0, Streak > 0, and Dimention >= Streal" << endl
+		<< "Dimension > 0, Streak > 0, and Dimention >= Streak" << endl
 		<< "This program starts a boardgame." << endl;
 }

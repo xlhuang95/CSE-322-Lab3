@@ -15,35 +15,37 @@ Date: 11/16/2017
 #include "tictactoe.h"
 #include "helper.h"
 #include <iomanip>
+#include <algorithm>
 
-// tictactoe constructor
+// tictactoe default constructor. init a 3 by 3 game board
 TicTacToe::TicTacToe() {
 	symbol1 = "X";
 	symbol2 = "O";
 	row = 3;
 	col = 3;
 	streak = 3;
+	longestString = max(symbol1.length(), symbol2.length());
 	// init game board
-	for (unsigned int i = 0; i < row + 2; ++i) {
+	for (size_t i = 0; i < row + 2; ++i) {
 		vector<string> temp;
 		pieces.push_back(temp);
-		for (unsigned int j = 0; j < col + 2; ++j) {
+		for (size_t j = 0; j < col + 2; ++j) {
 			pieces[i].push_back(empty);
 		}
 	}
 }
 
-// overload insertion operator
+// overload ostream insertion operator
 ostream & operator << (ostream &out, const TicTacToe &g) {
-	for (int row = g.row + 1; row >= 0; --row) {	// print rows in opposite
+	for (size_t row = g.row + 1; row >= 0; --row) {	// print rows in opposite
 		out << left << setw(g.longestString + 1) << row;
-		for (unsigned int col = 0; col <= g.col + 1; col++) {
+		for (size_t col = 0; col <= g.col + 1; col++) {
 			out << left << setw(g.longestString + 1) << g.pieces[col][row];
 		}
 		out << endl;
 	}
 	out << setw(g.longestString + 1) << " ";
-	for (unsigned int i = 0; i <= g.col + 1; i++) {
+	for (size_t i = 0; i <= g.col + 1; i++) {
 		out << left << setw(g.longestString + 1) << i;
 	}
 	out << endl;

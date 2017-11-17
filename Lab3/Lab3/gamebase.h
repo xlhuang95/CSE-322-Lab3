@@ -39,11 +39,9 @@ protected:
 	unsigned int row, col, numTurns, streak;
 	int longestString;
 	int currentPlayer = 1;
-	string symbol1;
-	string symbol2;
+	string symbol1, symbol2;
 	string empty = "";
-	vector<Move> player1;
-	vector<Move> player2;
+	vector<Move> player1, player2;
 	vector<vector<string> > pieces;
 };
 
